@@ -23,6 +23,8 @@ import Users from './pages/Users';
 import Screenshots from './pages/Screenshots';
 import Hashtags from './pages/Hashtags';
 import WebsiteDetails from './pages/WebsiteDetails';
+import EcomQuery from './pages/EcomQuery';
+import Products from './pages/Products';
 
 const ProtectedRoute = ({ user, redirectPath = '/login', children }) => {
   if (!user.isAuthenticated) {
@@ -79,6 +81,8 @@ function App() {
             <Route exact path="/users" element={<Users />} />
             <Route exact path="/screenshots" element={<Screenshots />} />
             <Route exact path="/hashtags" element={<Hashtags />} />
+            <Route exact path="/ecommerce/query" element={<EcomQuery />} />
+            <Route exact path="/products" element={<Products />} />
 
           </Route>
           <Route element={<PublicRoute user={user} redirectPath='/' />}>

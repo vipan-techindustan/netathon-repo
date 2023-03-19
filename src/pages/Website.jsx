@@ -66,7 +66,6 @@ export default function Website() {
       return {
         desc,
         crawler_status,
-        desc,
         meta_img,
         name,
         title,

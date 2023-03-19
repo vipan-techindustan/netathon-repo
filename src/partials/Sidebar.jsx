@@ -2,11 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import SidebarLinkGroup from './SidebarLinkGroup';
-import {AiFillTags} from 'react-icons/ai'
+import { AiFillTags } from 'react-icons/ai'
 import { MdScreenshotMonitor } from 'react-icons/md'
 import { CgWebsite } from 'react-icons/cg'
-import {AiOutlineUsergroupDelete} from 'react-icons/ai'
-
+import { MdQueryStats } from 'react-icons/md'
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
   const navigate = useNavigate()
@@ -145,9 +144,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </li>
               <li>
                 {
-                  !sidebarExpanded || (!sidebarExpanded && !sidebarOpen) ? <CgWebsite size={25} onClick={() => navigate('/ecommerce/website')}   className={` my-5 ml-3 fill-current ${pathname.includes('website') ? 'text-indigo-600' : 'text-slate-400'
-                }`}/> : <div onClick={() => navigate('/ecommerce/website')} className={`my-5 cursor-pointer flex items-center ml-3 fill-current ${pathname.includes('website') ? 'text-indigo-500' : 'text-slate-400'
-                    }`}>
+                  !sidebarExpanded || (!sidebarExpanded && !sidebarOpen) ? <CgWebsite size={25} onClick={() => navigate('/ecommerce/website')} className={` my-5 ml-3 fill-current ${pathname.includes('website') ? 'text-indigo-600' : 'text-slate-400'
+                    }`} /> : <div onClick={() => navigate('/ecommerce/website')} className={`my-5 cursor-pointer flex items-center ml-3 fill-current ${pathname.includes('website') ? 'text-indigo-500' : 'text-slate-400'
+                      }`}>
                     <CgWebsite size={25} className="" />
                     <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                       Website
@@ -159,30 +158,56 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
               <li>
                 {
-                  !sidebarExpanded || (!sidebarExpanded && !sidebarOpen) ?    <MdScreenshotMonitor size={25}  onClick={() => navigate('/screenshots')} className={` my-5 ml-3 fill-current ${pathname.includes('screenshots') ? 'text-indigo-600' : 'text-slate-400'
-                }`}/> :  <div onClick={() => navigate('/screenshots')} className={`my-5 cursor-pointer flex items-center ml-3 fill-current ${pathname.includes('screenshots') ? 'text-indigo-500' : 'text-slate-400'
-                }`}>
-                <MdScreenshotMonitor size={25} />
-                <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                  Screenshots
-                </span>
-              </div>
+                  !sidebarExpanded || (!sidebarExpanded && !sidebarOpen) ? <MdScreenshotMonitor size={25} onClick={() => navigate('/screenshots')} className={` my-5 ml-3 fill-current ${pathname.includes('screenshots') ? 'text-indigo-600' : 'text-slate-400'
+                    }`} /> : <div onClick={() => navigate('/screenshots')} className={`my-5 cursor-pointer flex items-center ml-3 fill-current ${pathname.includes('screenshots') ? 'text-indigo-500' : 'text-slate-400'
+                      }`}>
+                    <MdScreenshotMonitor size={25} />
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Screenshots
+                    </span>
+                  </div>
                 }
-               
+
               </li>
 
               <li>
                 {
-                 !sidebarExpanded || (!sidebarExpanded && !sidebarOpen) ? <AiFillTags size={25}  onClick={() => navigate('/hashtags')} className={` my-5 ml-3 fill-current ${pathname.includes('hashtags') ? 'text-indigo-600' : 'text-slate-400'
-                }`} /> :  <div onClick={() => navigate('/hashtags')} className={`my-5 cursor-pointer flex items-center ml-3 fill-current ${pathname.includes('hashtags') ? 'text-indigo-500' : 'text-slate-400'
-                }`}>
-                <AiFillTags size={25} />
-                <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                  Tags
-                </span>
-              </div>
+                  !sidebarExpanded || (!sidebarExpanded && !sidebarOpen) ? <AiFillTags size={25} onClick={() => navigate('/hashtags')} className={` my-5 ml-3 fill-current ${pathname.includes('hashtags') ? 'text-indigo-600' : 'text-slate-400'
+                    }`} /> : <div onClick={() => navigate('/hashtags')} className={`my-5 cursor-pointer flex items-center ml-3 fill-current ${pathname.includes('hashtags') ? 'text-indigo-500' : 'text-slate-400'
+                      }`}>
+                    <AiFillTags size={25} />
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Tags
+                    </span>
+                  </div>
                 }
-               
+              </li>
+
+              <li>
+                {
+                  !sidebarExpanded || (!sidebarExpanded && !sidebarOpen) ? <MdQueryStats size={25} onClick={() => navigate('/ecommerce/query')} className={` my-5 ml-3 fill-current ${pathname.includes('ecom') ? 'text-indigo-600' : 'text-slate-400'
+                    }`} /> : <div onClick={() => navigate('/ecommerce/query')} className={`my-5 cursor-pointer flex items-center ml-3 fill-current ${pathname.includes('/ecommerce/query') ? 'text-indigo-500' : 'text-slate-400'
+                      }`}>
+                    <MdQueryStats size={25} />
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Ecom Query
+                    </span>
+                  </div>
+                }
+              </li>
+
+              <li>
+                {
+                  !sidebarExpanded || (!sidebarExpanded && !sidebarOpen) ? <MdScreenshotMonitor size={25} onClick={() => navigate('/products')} className={` my-5 ml-3 fill-current ${pathname.includes('products') ? 'text-indigo-600' : 'text-slate-400'
+                    }`} /> : <div onClick={() => navigate('/products')} className={`my-5 cursor-pointer flex items-center ml-3 fill-current ${pathname.includes('products') ? 'text-indigo-500' : 'text-slate-400'
+                      }`}>
+                    <MdScreenshotMonitor size={25} />
+                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Products
+                    </span>
+                  </div>
+                }
+
               </li>
 
             </ul>

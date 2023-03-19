@@ -29,10 +29,9 @@ export default function Hashtags() {
     setLoading(true)
     try {
       const { code, info, total } = await getTagsLists(pageNum, 10, hashtagsSearchKey)
-      console.log("info=>", info)
-      // if(code===200){
+      if(code===200){
       setTagsData([...tagsData, ...info?.data])
-      // }
+      }
     } catch (error) {
       console.log(error)
     }

@@ -55,7 +55,6 @@ function Dashboard() {
       return {
         desc,
         crawler_status,
-        desc,
         meta_img,
         name,
         title,
