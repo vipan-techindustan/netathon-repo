@@ -16,6 +16,7 @@ function LineChart01({
   height
 }) {
 
+  console.log("data==>",data)
   const canvas = useRef(null);
 
   useEffect(() => {

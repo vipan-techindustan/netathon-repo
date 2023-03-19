@@ -1,7 +1,7 @@
 import { axiosClient } from "../axiosInstance"
 
 export const userLogin = async(data)=>{
-    const res = await axiosClient.post('user/login',data);
+    const res = await axiosClient.post(`user/login`,data);
     return res;
 }
 

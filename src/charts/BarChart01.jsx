@@ -41,14 +41,14 @@ function BarChart01({
             },
             ticks: {
               maxTicksLimit: 5,
-              callback: (value) => formatValue(value),
+              callback: (value) => value,
             },
           },
           x: {
             type: 'time',
             time: {
               parser: 'MM-DD-YYYY',
-              unit: 'month',
+              unit: 'day',
               displayFormats: {
                 month: 'MMM YY',
               },
@@ -68,7 +68,7 @@ function BarChart01({
           tooltip: {
             callbacks: {
               title: () => false, // Disable tooltip title
-              label: (context) => formatValue(context.parsed.y),
+              label: (context) =>context.parsed.y,
             },
           },
         },
@@ -131,7 +131,7 @@ function BarChart01({
             label.style.fontSize = tailwindConfig().theme.fontSize.sm[0];
             label.style.lineHeight = tailwindConfig().theme.fontSize.sm[1].lineHeight;
             const theValue = c.data.datasets[item.datasetIndex].data.reduce((a, b) => a + b, 0);
-            const valueText = document.createTextNode(formatValue(theValue));
+            const valueText = document.createTextNode(theValue);
             const labelText = document.createTextNode(item.text);
             value.appendChild(valueText);
             label.appendChild(labelText);

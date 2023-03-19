@@ -1,28 +1,27 @@
-import React, { useState, useMemo, useEffect, useRef,useCallback } from 'react'
-import Card from '../components/UI/Card'
-import { TbMoodEmpty } from 'react-icons/tb'
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { getAllWebsites } from '../api/website';
 import { AiFillEye } from 'react-icons/ai'
 import Loading from '../components/UI/Loading';
 import { truncateString } from '../utils/helper';
 import _debounce from 'lodash/debounce';
+import { Link, useSearchParams } from 'react-router-dom'
+import blankImage from '../images/no-image-icon.png'
 
 export default function Website() {
-  const [searchHashtagKey, setSearchHashtagKey] = useState("");
+  const [searchParams] = useSearchParams()
   const [loading, setLoading] = useState(true);
   const [websitesData, setWebsitesData] = useState({
     data: [],
     total: 0,
   });
-  const [searchKey,setSearchKey] = useState("")
+  const [searchKey, setSearchKey] = useState("")
   const [pageNum, setPageNum] = useState(0);
-  const [lastElement, setLastElement] = useState(null)
-  const [refresh,setRefresh] = useState(false)
+  const [refresh, setRefresh] = useState(false)
 
   const getWebsitesLists = async () => {
     setLoading(true)
     try {
-      const { code, info } = await getAllWebsites(pageNum,10,searchKey)
+      const { code, info } = await getAllWebsites(pageNum, 10, searchKey)
       if (code === 200) {
         setWebsitesData({ data: info.data, total: info.total })
       }
@@ -40,17 +39,26 @@ export default function Website() {
 
   const debounceFn = useCallback(_debounce(handleChange, 1000), []);
 
-  useEffect(()=>{
-    if(refresh){
-    getWebsitesLists()
-      
+  useEffect(() => {
+    if (refresh) {
+      getWebsitesLists()
+
     }
-  },[refresh])
+  }, [refresh])
 
 
   useEffect(() => {
     getWebsitesLists()
   }, [pageNum])
+
+  useEffect(()=>{
+    if(searchParams.get('tag')){
+      setSearchKey(searchParams.get('tag') || "")
+      setTimeout(()=>{
+        setRefresh(true)
+      },[100])
+    }
+  },[])
 
   const parseData = useMemo(() => {
     return websitesData.data.map((website) => {
@@ -63,49 +71,10 @@ export default function Website() {
         name,
         title,
         url,
-        actions: <AiFillEye size={25} />
+        actions: <Link to={`/ecommerce/website/${website.id}`}><AiFillEye size={25} /></Link>
       }
     })
   }, [websitesData?.data])
-
-  let data = [
-    {
-      heading: "The Coldest Sunset",
-      title: "  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.",
-      hastags: ["photography", "travel", "winter"]
-    },
-    {
-      heading: "The Coldest Sunset",
-      title: "  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.",
-      hastags: ["snapchat", "area", "summer"]
-    },
-    {
-      heading: "The Coldest Sunset",
-      title: "  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.",
-      hastags: ["movie", "mountain", "spring"]
-    },
-    {
-      heading: "The Coldest Sunset",
-      title: "  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.",
-      hastags: ["night", "day", "winter"]
-    },
-    {
-      heading: "The Coldest Sunset",
-      title: "  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.",
-      hastags: ["photography", "travel", "winter"]
-    }
-  ]
-
-
-
-  // useEffect(() => {
-  //   getWebsitesLists()
-  // }, [])
-
-  const searchData = useMemo(() => {
-    if (!searchHashtagKey) return data;
-    return data.filter((item => item.hastags.some(hashtag => hashtag.includes(searchHashtagKey))))
-  }, [searchHashtagKey])
 
   return (
     <div>
@@ -117,10 +86,10 @@ export default function Website() {
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
               </div>
-              <input onChange={(e) =>{
+              <input onChange={(e) => {
                 setSearchKey(e.target.value)
                 debounceFn()
-              } } value={searchKey} type="search" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " placeholder="Search Website..." required />
+              }} value={searchKey} type="search" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " placeholder="Search Website..." required />
               {/* <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
             </div>
           </form>
@@ -133,19 +102,20 @@ export default function Website() {
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="px-6 py-3">
+                  Meta Image
+                </th>
+                <th scope="col" class="px-6 py-3">
                   Name
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Title
                 </th>
+
                 <th scope="col" class="px-6 py-3">
-                  Meta Image
+                  URL
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Crawler Status
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  URL
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Action
@@ -156,6 +126,15 @@ export default function Website() {
               {
                 loading ? <Loading /> : parseData?.map((data => {
                   return <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <td class="px-6 py-4">
+                      <img
+                        src={data?.meta_img || blankImage}
+                        onError={({ currentTarget }) => {
+                          currentTarget.src = blankImage
+                        }}
+                        alt={data?.meta_img || "not found"}
+                        className="rounded h-20 w-20 object-fill" />
+                    </td>
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       {data.name}
                     </th>
@@ -168,7 +147,7 @@ export default function Website() {
                       }
                     </td>
                     <td class="px-6 py-4">
-                      {data.meta_img ? <img src={data.meta_img} alt={data.meta_img} className="h-20 w-20" /> : "-"}
+                      {data.url}
                     </td>
                     <td class="px-6 py-4">
                       {
@@ -181,9 +160,7 @@ export default function Website() {
 
                       {/* {data.crawler_status} */}
                     </td>
-                    <td class="px-6 py-4">
-                      {data.url}
-                    </td>
+
                     <td class="px-6 py-4">
                       {data.actions}
                     </td>

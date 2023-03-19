@@ -38,7 +38,7 @@ export default function VerifyEmail() {
        
         setIsVerifying(true)
         try {
-            const { code, message,info,token } = await userVerify({ email, otp })
+            const { code, message,info,token } = await userVerify({ email:decodeURI(email), otp })
             if (code === 200) {
                 toast.success(message)
                 setData('auth_token',token)
